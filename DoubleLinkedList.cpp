@@ -172,7 +172,7 @@ void DoubleLinkedList::InsertAtPosition(int Location, const Book &Item)
  * @returns The book if found; otherwise, returns an empty book object.
  */
 
-/*Complexity: O(Location)*/
+/*Complexity: O(n)*/
 
 Book DoubleLinkedList::Search(const string Title)
 {
@@ -199,6 +199,7 @@ Book DoubleLinkedList::Search(const string Title)
  * @returns The number of nodes in the list.
  */
 
+/*Complexity: O(1)*/
 int DoubleLinkedList::Lenght()
 {
     return Count;
