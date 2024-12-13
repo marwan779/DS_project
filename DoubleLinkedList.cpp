@@ -33,6 +33,7 @@ bool DoubleLinkedList::IsEmpty()
  * @returns true if the book with the given title exists in the list, false otherwise.
  */
 
+/*Complexity: O(n)*/
 bool DoubleLinkedList::BookExist(const string Title)
 {
     Node *Current = Head;
@@ -59,6 +60,8 @@ bool DoubleLinkedList::BookExist(const string Title)
  * @param Item The book to be inserted.
  */
 
+
+/*Complexity: O(1)*/
 void DoubleLinkedList::InsertAtBegnning(const Book &Item)
 {
     Node *NewNode = new Node;
@@ -87,6 +90,7 @@ void DoubleLinkedList::InsertAtBegnning(const Book &Item)
  * @param Item The book to be inserted.
  */
 
+/*Complexity: O(1)*/
 void DoubleLinkedList::InsertAtEnd(const Book &Item)
 {
     Node *NewNode = new Node;
@@ -115,6 +119,8 @@ void DoubleLinkedList::InsertAtEnd(const Book &Item)
  * @param Location The position where the book will be inserted (1-based index).
  * @param Item The book to be inserted.
  */
+
+/*Complexity: O(Location)*/
 
 void DoubleLinkedList::InsertAtPosition(int Location, const Book &Item)
 {
@@ -166,6 +172,8 @@ void DoubleLinkedList::InsertAtPosition(int Location, const Book &Item)
  * @returns The book if found; otherwise, returns an empty book object.
  */
 
+/*Complexity: O(Location)*/
+
 Book DoubleLinkedList::Search(const string Title)
 {
     Node *Current = Head;
@@ -199,9 +207,10 @@ int DoubleLinkedList::Lenght()
 /**
  * Deletes a book by title from the double linked list.
  *
- * @param Title The title of the book to be deleted.
+ * @param Location The Location of the book to be deleted.
  */
 
+/*Complexity: O(Location)*/
 void DoubleLinkedList::DeleteNode(const int Location)
 {
     Node *Current = Head;
@@ -272,6 +281,7 @@ void DoubleLinkedList::DeleteNode(const int Location)
  * Displays details of each book including title, author, category, and price.
  */
 
+/*Complexity: O(n)*/
 void DoubleLinkedList::PrintForward()
 {
     if(IsEmpty())
@@ -304,6 +314,7 @@ void DoubleLinkedList::PrintForward()
  * Starts from the tail and displays each book's details.
  */
 
+/*Complexity: O(n)*/
 void DoubleLinkedList::PrintBackward()
 {
     Node *Current = Tail;
@@ -325,6 +336,7 @@ void DoubleLinkedList::PrintBackward()
  * @param Category The category to filter books by.
  */
 
+/*Complexity: O(n)*/
 void DoubleLinkedList::PrintByCategory(string Category)
 {
     Node *Current = Head;
@@ -353,6 +365,7 @@ void DoubleLinkedList::PrintByCategory(string Category)
  * @param book The book to be printed.
  */
 
+/*Complexity: O(1)*/
 void DoubleLinkedList::PrintBook(Book book)
 {
     cout << "------------------------------------\n";
@@ -370,6 +383,7 @@ void DoubleLinkedList::PrintBook(Book book)
  * Prompts the user for confirmation before deleting all nodes.
  */
 
+/*Complexity: O(n)*/
 void DoubleLinkedList::Free()
 {
     if(IsEmpty())
@@ -410,8 +424,10 @@ void DoubleLinkedList::Free()
 
 /**
  * Sorts the double linked list based on the title of the books in ascending order.
+ * Selection Sort Algorithm
  */
 
+/*Complexity: O(n^2)*/
 void DoubleLinkedList::Sort()
 {
     if(IsEmpty())
@@ -429,7 +445,7 @@ void DoubleLinkedList::Sort()
 
             while (Iterator)
             {
-                if (Iterator->Data.Title.at(0) < SmallestNode->Data.Title.at(0))
+                if (Iterator->Data.Title < SmallestNode->Data.Title)
                 {
                     SmallestNode = Iterator;
                 }
