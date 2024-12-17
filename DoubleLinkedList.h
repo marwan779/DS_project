@@ -47,6 +47,7 @@ public:
     void Free();
     bool BookExist(const string Title);
     void Sort();
+    bool IsEmpty();
 
 
 protected:
@@ -54,8 +55,7 @@ protected:
     Node *Tail;
     int Count;
 
-private:
-        bool IsEmpty();
+        
 
 };
 

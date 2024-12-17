@@ -108,18 +108,25 @@ void BooksManagement::PrintByCategory()
 
 void BooksManagement::SearchForBook()
 {
-    string Title;
-    cout << "Enter Book Title: ";
-    fflush(stdin);
-    getline(cin, Title);
-    Book Temp = Library.Search(Title);
-    if (Temp.Title == "")
+    if(Library.IsEmpty())
     {
-        cout << "\nNo Book With Such Name\n\n";
+        cout<<"\nThe List Is Embty At The Moment\n\n";
     }
     else
     {
-        Library.PrintBook(Temp);
+        string Title;
+        cout << "Enter Book Title: ";
+        fflush(stdin);
+        getline(cin, Title);
+        Book Temp = Library.Search(Title);
+        if (Temp.Title == "")
+        {
+            cout << "\nNo Book With Such Name\n\n";
+        }
+        else
+        {
+            Library.PrintBook(Temp);
+        }
     }
 }
 
