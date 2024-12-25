@@ -35,13 +35,10 @@ class DoubleLinkedList
 public:
     DoubleLinkedList();
     void InsertAtBegnning(const Book &Item);
-    void InsertAtEnd(const Book &Item);
-    void InsertAtPosition(int Location, const Book &Item);
     Book Search(const string Title);
     int Lenght();
     void DeleteNode(const int Location);
     void PrintForward();
-    void PrintBackward();
     void PrintByCategory(string Category);
     void PrintBook(Book book);
     void Free();

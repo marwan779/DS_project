@@ -1,5 +1,6 @@
 #include <iostream>
 #include "DoubleLinkedList.h"
+#include <iomanip>
 using namespace std;
 
 /**
@@ -37,7 +38,7 @@ bool DoubleLinkedList::IsEmpty()
 bool DoubleLinkedList::BookExist(const string Title)
 {
     Node *Current = Head;
-    bool Result;
+    bool Result = false;
     while (Current != nullptr)
     {
         if (Title == Current->Data.Title)
@@ -84,113 +85,37 @@ void DoubleLinkedList::InsertAtBegnning(const Book &Item)
     Count++;
 }
 
-/**
- * Inserts a book at the end of the double linked list.
- *
- * @param Item The book to be inserted.
- */
-
-/*Complexity: O(1)*/
-void DoubleLinkedList::InsertAtEnd(const Book &Item)
-{
-    Node *NewNode = new Node;
-    NewNode->Data = Item;
-    // 1. insert when the list is empty
-    if (IsEmpty())
-    {
-        Head = NewNode;
-        Tail = NewNode;
-        NewNode->Next = nullptr;
-        NewNode->Back = nullptr;
-    }
-    else // 2. insert when the list is not empty
-    {
-        NewNode->Back = Tail;
-        NewNode->Next = nullptr;
-        Tail->Next = NewNode;
-        Tail = NewNode;
-    }
-    Count++;
-}
 
 /**
- * Inserts a book at a specific position in the double linked list.
- *
- * @param Location The position where the book will be inserted (1-based index).
- * @param Item The book to be inserted.
- */
-
-/*Complexity: O(Location)*/
-
-void DoubleLinkedList::InsertAtPosition(int Location, const Book &Item)
-{
-    Node *NewNode = new Node;
-    NewNode->Data = Item;
-    Node *Current = Head;
-    if (Location < 0 || Location > Count)
-    {
-        cout << "\nthe given location is out of range\n";
-    }
-    else if (Location == 1)
-    {
-        InsertAtBegnning(Item);
-    }
-    else if (Location == Count)
-    {
-        InsertAtEnd(Item);
-    }
-    else
-    {
-        // 1. insert when the list is empty
-        if (IsEmpty())
-        {
-            Head = NewNode;
-            Tail = NewNode;
-        }
-        else // 2. insert when the list is not empty
-        {
-            for (int i = 1; i < Location - 1; i++)
-            {
-                Current = Current->Next;
-            }
-
-            NewNode->Next = Current->Next;
-            NewNode->Back = Current;
-            Current->Next = NewNode;
-            NewNode->Next->Back = NewNode;
-        }
-        Count++;
-    }
-}
-
-
-/**
- * Searches for a book by title in the double linked list.
+ * Searches for a book by title in the double linked list using
+ * two pointers algorithm.
  *
  * @param Title The title of the book to search for.
  *
  * @returns The book if found; otherwise, returns an empty book object.
  */
 
-/*Complexity: O(n)*/
 
+/*Complexity: O(n)*/
 Book DoubleLinkedList::Search(const string Title)
 {
-    Node *Current = Head;
-    Book Result ;
-    while (Current != nullptr)
+    Node *first = Head;
+    Node *last = Tail;
+    Book Result;
+
+    while (first != nullptr && last != nullptr && first != last->Next)
     {
-        if (Title == Current->Data.Title)
-        {
-            Result = Current ->Data;
-            break;
-        }
-        else
-        {
-            Current = Current->Next;
-        }
+        if (first->Data.Title == Title)
+            return first->Data;
+
+        if (last->Data.Title == Title)
+            return last->Data;
+
+        first = first->Next;
+        last = last->Back;
     }
-    return Result;
+    cout << "Error: Book not found!\n";
+    return (Result);
 }
 
 /**
@@ -218,7 +143,7 @@ void DoubleLinkedList::DeleteNode(const int Location)
     Node *DeleteItem;
     if(IsEmpty())
     {
-        cout<<"\nThe List Is Embty At The Moment\n\n";
+        cout<<"\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
@@ -287,47 +212,29 @@ void DoubleLinkedList::PrintForward()
 {
     if(IsEmpty())
     {
-        cout<<"\nThe List Is Embty At The Moment\n\n";
+        cout<<"\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
         Node *Current = Head;
         int Index = 1;
-        cout << "------------------------------------\n";
+
+        cout<<"+-------+--------------------+--------------------+---------------+----------------+\n";
+        cout<<"| Index |        Title       |       Author       |    Category   |      Price     |\n";
+        cout<<"+-------+--------------------+--------------------+---------------+----------------+\n";
         while (Current != nullptr)
         {
-            cout << "Index: "<<Index<<"\n";
-            cout << "Title: " << Current->Data.Title << "\n";
-            cout << "Author: " << Current->Data.Author << "\n";
-            cout << "Category: " << Current->Data.Category << "\n";
-            cout << "Price: " << Current->Data.Price << "$\n";
-
+            
+            cout << "| " << setw(5) << Index << " | "
+            << setw(18) << Current->Data.Title << " | "
+            << setw(18) << Current->Data.Author << " | "
+            << setw(13) << Current->Data.Category << " | "
+            << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" << " |\n";
 
             Index++;
             Current = Current->Next;
-            cout << "------------------------------------\n";
+            cout<<"+-------+--------------------+--------------------+---------------+----------------+\n";
         }
-    }
-}
-
-/**
- * Prints the contents of the double linked list in reverse order.
- * Starts from the tail and displays each book's details.
- */
-
-/*Complexity: O(n)*/
-void DoubleLinkedList::PrintBackward()
-{
-    Node *Current = Tail;
-    cout << "------------------------------------\n";
-    while (Current != nullptr)
-    {
-        cout << "Title: " << Current->Data.Title << "\n";
-        cout << "Author: " << Current->Data.Author << "\n";
-        cout << "Category: " << Current->Data.Category << "\n";
-        cout << "Price: " << Current->Data.Price << "$\n";
-        Current = Current->Back;
-        cout << "------------------------------------\n";
     }
 }
 
@@ -342,18 +249,22 @@ void DoubleLinkedList::PrintByCategory(string Category)
 {
     Node *Current = Head;
     cout<<"*******************\n";
-    cout<< "Categoty: " << Category <<"\n";
+    cout<<"Categoty: " << Category <<"\n";
     cout<<"*******************\n";
 
+    cout<<"+--------------------+--------------------+----------------+\n";
+    cout<<"|        Title       |       Author       |      Price     |\n";
+    cout<<"+--------------------+--------------------+----------------+\n";
     while (Current != nullptr)
     {
         if (Current->Data.Category == Category)
         {
-            cout << "Title: " << Current->Data.Title << "\n";
-            cout << "Author: " << Current->Data.Author << "\n";
-            cout << "Price: " << Current->Data.Price << "$\n";
+            cout <<"| " << setw(18) << Current->Data.Title << " | "
+            << setw(18) << Current->Data.Author << " | "
+            << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" << " |\n";
 
-            cout << "------------------------------------\n";
+
+            cout<<"+--------------------+--------------------+----------------+\n";
         }
 
         Current = Current->Next;
@@ -369,14 +280,16 @@ void DoubleLinkedList::PrintByCategory(string Category)
 /*Complexity: O(1)*/
 void DoubleLinkedList::PrintBook(Book book)
 {
-    cout << "------------------------------------\n";
+    cout<<"+--------------------+--------------------+---------------+----------------+\n";
+    cout<<"|        Title       |       Author       |    Category   |      Price     |\n";
+    cout<<"+--------------------+--------------------+---------------+----------------+\n";
+    cout << "| " << setw(18) << book.Title << " | "
+            << setw(18) << book.Author << " | "
+            << setw(13) << book.Category << " | "
+            << setw(13) << fixed << setprecision(2) << book.Price<<"$" << " |\n";
 
-    cout << "Title: " << book.Title << "\n";
-    cout << "Author: " << book.Author << "\n";
-    cout << "Category: " << book.Category << "\n";
-    cout << "Price: " << book.Price << "$\n";
 
-    cout << "------------------------------------\n";
+    cout<<"+--------------------+--------------------+---------------+----------------+\n";
 }
 
 /**
@@ -389,14 +302,14 @@ void DoubleLinkedList::Free()
 {
     if(IsEmpty())
     {
-        cout<<"\nThe List Is Embty At The Moment\n\n";
+        cout<<"\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
         char Choice;
-        cout<<"Are You Sure You Want To Free The List? (press y for yes or n for no): ";
+        cout<<"Are You Sure You Want To Free The List? (press (Y/y) for yes or (N/n) for no): ";
         cin>>Choice;
-        if(Choice == 'y')
+        if(Choice == 'y' || Choice == 'Y')
         {
             Node *Current = Head;
             Node *DeleteItem;
@@ -411,7 +324,7 @@ void DoubleLinkedList::Free()
             Tail = nullptr;
             Count = 0;
         }
-        else if(Choice == 'n')
+        else if(Choice == 'n' || Choice == 'N')
         {
             cout<<"Free Operation Is Canceled\n";
         }
@@ -433,7 +346,7 @@ void DoubleLinkedList::Sort()
 {
     if(IsEmpty())
     {
-        cout<<"\nThe Library Is List At The Moment\n\n";
+        cout<<"\nError: The Library Is List At The Moment\n\n";
     }
     else if(Count ==1 ) {}
     else

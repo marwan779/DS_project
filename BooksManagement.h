@@ -17,6 +17,7 @@ class BooksManagement
         void DeleteBook();
         void FreeLibrary();
         void SortLibrary();
+    private:
         DoubleLinkedList Library;
 };
 

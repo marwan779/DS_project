@@ -19,7 +19,7 @@ void BooksManagement::AddBookTolibrary()
 
     if (Library.BookExist(book.Title))
     {
-        cout << "\nA Book With The Same Title Exists. Choice Different Title Please\n\n";
+        cout << "\nError: A Book With The Same Title Exists. Choice Different Title Please\n\n";
     }
     else
     {
@@ -73,32 +73,39 @@ void BooksManagement::PrintBooks()
 
 void BooksManagement::PrintByCategory()
 {
-    int Choice;
-    string Category;
-    cout << "1. Fiction\n2. History\n3. Mystery\n4. Science\n";
-    cout << "choice Book Category: ";
-    cin >> Choice;
-    switch (Choice)
+    if(Library.IsEmpty())
     {
-    case 1:
-        Category = "Fiction";
-        break;
-    case 2:
-        Category = "History";
-        break;
-    case 3:
-        Category = "Mystery";
-        break;
-    case 4:
-        Category = "Science";
-        break;
-    default:
-        cout << "Invalid category choice. Defaulting to Fiction.\n";
-        Category = "Fiction";
-        break;
+        cout<<"\nError: The Library Is Embty At The Moment\n\n";
     }
+    else
+    {
+        int Choice;
+        string Category;
+        cout << "1. Fiction\n2. History\n3. Mystery\n4. Science\n";
+        cout << "choice Book Category: ";
+        cin >> Choice;
+        switch (Choice)
+        {
+        case 1:
+            Category = "Fiction";
+            break;
+        case 2:
+            Category = "History";
+            break;
+        case 3:
+            Category = "Mystery";
+            break;
+        case 4:
+            Category = "Science";
+            break;
+        default:
+            cout << "Invalid category choice. Defaulting to Fiction.\n";
+            Category = "Fiction";
+            break;
+        }
 
-    Library.PrintByCategory(Category);
+        Library.PrintByCategory(Category);
+    }
 }
 
 /**
@@ -110,7 +117,7 @@ void BooksManagement::SearchForBook()
 {
     if(Library.IsEmpty())
     {
-        cout<<"\nThe List Is Embty At The Moment\n\n";
+        cout<<"\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
@@ -147,14 +154,22 @@ void BooksManagement::UpdateBook()
 
 void BooksManagement::DeleteBook()
 {
-    int Index;
-    Library.PrintForward();
-    cout << "\n";
-    cout << "Entere Book Index: ";
-    cin >> Index;
+    if(Library.IsEmpty())
+    {
+        cout<<"\nThe Library Is Library At The Moment\n\n";
+    }
+    else
+    {
+        int Index;
+        Library.PrintForward();
+        cout << "\n";
+        cout << "Entere Book Index: ";
+        cin >> Index;
 
-    Library.DeleteNode(Index);
-    Library.Sort();
+        Library.DeleteNode(Index);
+        Library.Sort();
+    }
+    
 }
 
 /**

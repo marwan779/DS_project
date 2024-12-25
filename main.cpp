@@ -5,15 +5,14 @@ using namespace std;
 
 int main()
 {
+
+    
     BooksManagement BM;
-    int Choice1, Choice2;
+    int Choice1 = 1, Choice2;
     cout<<"******************************\n";
     cout<<"  Library Management System  \n";
     cout<<"******************************\n";
 
-    cout<<"1. Continue\n2. Exit\n";
-    cout<<"Enter Your Choice: ";
-    cin>>Choice1;
     while(1)
     {
         if(Choice1 == 1)
@@ -47,7 +46,7 @@ int main()
                 break;
             case 8: BM.FreeLibrary();
                 break;
-            default:
+            default: cout<<"Enter a valid choice\n";
                 break;
             }
         }
