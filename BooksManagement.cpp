@@ -73,9 +73,9 @@ void BooksManagement::PrintBooks()
 
 void BooksManagement::PrintByCategory()
 {
-    if(Library.IsEmpty())
+    if (Library.IsEmpty())
     {
-        cout<<"\nError: The Library Is Embty At The Moment\n\n";
+        cout << "\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
@@ -115,9 +115,9 @@ void BooksManagement::PrintByCategory()
 
 void BooksManagement::SearchForBook()
 {
-    if(Library.IsEmpty())
+    if (Library.IsEmpty())
     {
-        cout<<"\nError: The Library Is Embty At The Moment\n\n";
+        cout << "\nError: The Library Is Embty At The Moment\n\n";
     }
     else
     {
@@ -125,14 +125,14 @@ void BooksManagement::SearchForBook()
         cout << "Enter Book Title: ";
         fflush(stdin);
         getline(cin, Title);
-        Book Temp = Library.Search(Title);
-        if (Temp.Title == "")
+        Book *Temp = Library.Search(Title);
+        if (Temp->Title == "")
         {
             cout << "\nNo Book With Such Name\n\n";
         }
         else
         {
-            Library.PrintBook(Temp);
+            Library.PrintBook(*Temp);
         }
     }
 }
@@ -143,9 +143,56 @@ void BooksManagement::SearchForBook()
 
 void BooksManagement::UpdateBook()
 {
-    DeleteBook();
-    cout << "\nEnter New Data\n";
-    AddBookTolibrary();
+    string Title;
+    Book *book = nullptr;
+    int Choice;
+
+    cout << "Enter Book Title: ";
+    fflush(stdin);
+    getline(cin, Title);
+    book = Library.Search(Title);
+    if (book == nullptr)
+    {
+    }
+    else
+    {
+        Library.PrintBook(*book);
+        cout << "\nEnter New Data\n\n";
+
+        cout << "Enter Book Title: ";
+        fflush(stdin);
+        getline(cin, book->Title);
+
+        cout << "Enter Book Author: ";
+        fflush(stdin);
+        getline(cin, book->Author);
+        cout << "1. Fiction\n2. History\n3. Mystery\n4. Science\n";
+        cout << "choice Book Category: ";
+        cin >> Choice;
+
+        switch (Choice)
+        {
+        case 1:
+            book->Category = "Fiction";
+            break;
+        case 2:
+            book->Category = "History";
+            break;
+        case 3:
+            book->Category = "Mystery";
+            break;
+        case 4:
+            book->Category = "Science";
+            break;
+        default:
+            cout << "Invalid category choice. Defaulting to Fiction.\n";
+            book->Category = "Fiction";
+            break;
+        }
+
+        cout << "Enter Book Price: ";
+        cin >> book->Price;
+    }
 }
 
 /**
@@ -154,9 +201,9 @@ void BooksManagement::UpdateBook()
 
 void BooksManagement::DeleteBook()
 {
-    if(Library.IsEmpty())
+    if (Library.IsEmpty())
     {
-        cout<<"\nThe Library Is Library At The Moment\n\n";
+        cout << "\nThe Library Is Library At The Moment\n\n";
     }
     else
     {
@@ -169,7 +216,6 @@ void BooksManagement::DeleteBook()
         Library.DeleteNode(Index);
         Library.Sort();
     }
-    
 }
 
 /**

@@ -97,19 +97,27 @@ void DoubleLinkedList::InsertAtBegnning(const Book &Item)
 
 
 /*Complexity: O(n)*/
-Book DoubleLinkedList::Search(const string Title)
+Book *DoubleLinkedList::Search(const string Title)
 {
     Node *first = Head;
     Node *last = Tail;
-    Book Result;
+    Book *Result = nullptr;
 
     while (first != nullptr && last != nullptr && first != last->Next)
     {
         if (first->Data.Title == Title)
-            return first->Data;
+        {
+            Result = &(first->Data);
+            return Result;
+        }   
+            
 
         if (last->Data.Title == Title)
-            return last->Data;
+        {
+            Result = &(last->Data);
+            return Result;
+        }
+            
 
         first = first->Next;
         last = last->Back;
