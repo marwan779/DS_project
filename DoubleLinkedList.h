@@ -47,7 +47,7 @@ public:
     bool IsEmpty();
 
 
-protected:
+private:
     Node *Head;
     Node *Tail;
     int Count;

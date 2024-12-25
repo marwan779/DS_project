@@ -1,6 +1,8 @@
 #include <iostream>
 #include "BooksManagement.h"
 #include <string>
+#include <limits>
+
 
 /**
  * Adds a new book to the library after getting the necessary information from the user.
@@ -61,6 +63,18 @@ void BooksManagement::AddBookTolibrary()
         cout << "Enter Book Price: ";
         cout <<termcolor::reset;
         cin >> book.Price;
+
+        while (cin.fail())
+        {
+            cout << termcolor::on_bright_red;
+            cout << termcolor::bright_white;
+            cout << "Please enter a valid Price!\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << termcolor::reset;
+            cout << "Enter Book Price: ";
+            cin >> book.Price;
+        }
 
         Library.InsertAtBegnning(book);
     }
@@ -222,6 +236,18 @@ void BooksManagement::UpdateBook()
         cout << "Enter Book Price: ";
         cin >> book->Price;
 
+        while (cin.fail())
+        {
+            cout << termcolor::on_bright_red;
+            cout << termcolor::bright_white;
+            cout << "Please enter a valid Price!\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << termcolor::reset;
+            cout << "Enter Book Price: ";
+            cin >> book->Price;
+        }
+
         cout <<termcolor::bright_white;
         cout <<termcolor::on_bright_green;
         cout <<"Update Done\n";
@@ -252,6 +278,19 @@ void BooksManagement::DeleteBook()
         cout << "Enter Book Index: ";
         cout <<termcolor::reset;
         cin >> Index;
+
+        while (cin.fail())
+        {
+            cout << termcolor::on_bright_red;
+            cout << termcolor::bright_white;
+            cout << "Please enter a valid Index!\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << termcolor::reset;
+            cout << "Enter Book Index: ";
+            cin >> Index;
+        }
+
         cout<<endl;
 
         Library.DeleteNode(Index);

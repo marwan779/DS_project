@@ -104,7 +104,13 @@ Book *DoubleLinkedList::Search(const string Title)
     Node *last = Tail;
     Book *Result = nullptr;
 
-    while (first != nullptr && last != nullptr && first != last->Next)
+    if (first == nullptr || last == nullptr)
+    {
+        cout << "There are no books to search for!\n";        
+        return (Result);
+    }
+    // Handle even and odd length of nodes
+    while (first != last && first != last->Next)
     {
         if (first->Data.Title == Title)
         {
