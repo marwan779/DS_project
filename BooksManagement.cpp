@@ -13,16 +13,21 @@ void BooksManagement::AddBookTolibrary()
 {
     Book book;
     int Choice;
+    cout <<termcolor::yellow;
     cout << "Enter Book Title: ";
     fflush(stdin);
     getline(cin, book.Title);
 
     if (Library.BookExist(book.Title))
     {
-        cout << "\nError: A Book With The Same Title Exists. Choice Different Title Please\n\n";
+       cout <<termcolor::bright_white;
+       cout <<termcolor::on_bright_red;
+       cout << "\nError: A Book With The Same Title Exists. Choice Different Title Please\n\n";
+       cout <<termcolor::reset;
     }
     else
     {
+        cout <<termcolor::yellow;
         cout << "Enter Book Author: ";
         fflush(stdin);
         getline(cin, book.Author);
@@ -45,12 +50,16 @@ void BooksManagement::AddBookTolibrary()
             book.Category = "Science";
             break;
         default:
+            cout <<termcolor::bright_white;
+            cout <<termcolor::on_bright_red;
             cout << "Invalid category choice. Defaulting to Fiction.\n";
             book.Category = "Fiction";
             break;
         }
 
+        cout <<termcolor::yellow;
         cout << "Enter Book Price: ";
+        cout <<termcolor::reset;
         cin >> book.Price;
 
         Library.InsertAtBegnning(book);
@@ -73,16 +82,21 @@ void BooksManagement::PrintBooks()
 
 void BooksManagement::PrintByCategory()
 {
-    if (Library.IsEmpty())
+    if(Library.IsEmpty())
     {
-        cout << "\nError: The Library Is Embty At The Moment\n\n";
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_red;
+        cout<<"\nError: The Library Is Empty At The Moment\n\n";
+        cout <<termcolor::reset;
     }
     else
     {
         int Choice;
         string Category;
+        cout <<termcolor::yellow;
         cout << "1. Fiction\n2. History\n3. Mystery\n4. Science\n";
         cout << "choice Book Category: ";
+         cout <<termcolor::reset;
         cin >> Choice;
         switch (Choice)
         {
@@ -99,7 +113,10 @@ void BooksManagement::PrintByCategory()
             Category = "Science";
             break;
         default:
+            cout <<termcolor::bright_white;
+            cout <<termcolor::on_bright_red;
             cout << "Invalid category choice. Defaulting to Fiction.\n";
+            cout <<termcolor::reset;
             Category = "Fiction";
             break;
         }
@@ -117,18 +134,27 @@ void BooksManagement::SearchForBook()
 {
     if (Library.IsEmpty())
     {
-        cout << "\nError: The Library Is Embty At The Moment\n\n";
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_red;
+        cout<<"\nError: The Library Is Empty At The Moment\n\n";
+        cout <<termcolor::reset;
     }
     else
     {
         string Title;
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_yellow;
         cout << "Enter Book Title: ";
+        cout <<termcolor::reset;
         fflush(stdin);
         getline(cin, Title);
         Book *Temp = Library.Search(Title);
         if (Temp->Title == "")
         {
+            cout <<termcolor::bright_white;
+            cout <<termcolor::on_bright_red;
             cout << "\nNo Book With Such Name\n\n";
+            cout <<termcolor::reset;
         }
         else
         {
@@ -157,7 +183,10 @@ void BooksManagement::UpdateBook()
     else
     {
         Library.PrintBook(*book);
+
+        cout <<termcolor::yellow;
         cout << "\nEnter New Data\n\n";
+        cout <<termcolor::yellow;
 
         cout << "Enter Book Title: ";
         fflush(stdin);
@@ -192,6 +221,11 @@ void BooksManagement::UpdateBook()
 
         cout << "Enter Book Price: ";
         cin >> book->Price;
+
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_green;
+        cout <<"Update Done\n";
+        cout <<termcolor::reset;
     }
 }
 
@@ -203,18 +237,28 @@ void BooksManagement::DeleteBook()
 {
     if (Library.IsEmpty())
     {
-        cout << "\nThe Library Is Library At The Moment\n\n";
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_red;
+        cout<<"\nError: The Library Is Empty At The Moment\n\n";
+        cout <<termcolor::reset;
     }
     else
     {
         int Index;
         Library.PrintForward();
         cout << "\n";
-        cout << "Entere Book Index: ";
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_magenta;
+        cout << "Enter Book Index: ";
+        cout <<termcolor::reset;
         cin >> Index;
+        cout<<endl;
 
         Library.DeleteNode(Index);
-        Library.Sort();
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_red;
+        cout << "Deleted\n";
+        cout <<termcolor::reset;
     }
 }
 

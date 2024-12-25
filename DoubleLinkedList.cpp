@@ -1,6 +1,7 @@
 #include <iostream>
 #include "DoubleLinkedList.h"
 #include <iomanip>
+#include "termcolor.hpp"
 using namespace std;
 
 /**
@@ -122,7 +123,10 @@ Book *DoubleLinkedList::Search(const string Title)
         first = first->Next;
         last = last->Back;
     }
+    cout <<termcolor::bright_white;
+    cout <<termcolor::on_bright_red;//background
     cout << "Error: Book not found!\n";
+    cout <<termcolor::reset;
     return (Result);
 }
 
@@ -151,13 +155,19 @@ void DoubleLinkedList::DeleteNode(const int Location)
     Node *DeleteItem;
     if(IsEmpty())
     {
-        cout<<"\nError: The Library Is Embty At The Moment\n\n";
+        cout <<termcolor::bright_white;
+                    cout <<termcolor::on_bright_red;
+                    cout << "\nError: the given location is out of range!\n\n";
+                    cout <<termcolor::reset;
     }
     else
     {
         if (Location < 0 || Location > Count)
         {
-            cout << "\nthe given location is out of range\n\n";
+           cout <<termcolor::bright_white;
+            cout <<termcolor::on_bright_red;
+            cout << "\nError: The given location is out of range\n\n";
+            cout <<termcolor::reset;
         }
         else
         {
@@ -220,7 +230,10 @@ void DoubleLinkedList::PrintForward()
 {
     if(IsEmpty())
     {
-        cout<<"\nError: The Library Is Embty At The Moment\n\n";
+        cout <<termcolor::bright_white;
+                cout <<termcolor::on_bright_red;
+                cout<<"\nError: The List Is Empty At The Moment!\n\n";
+                cout <<termcolor::reset;
     }
     else
     {
@@ -233,14 +246,15 @@ void DoubleLinkedList::PrintForward()
         while (Current != nullptr)
         {
             
-            cout << "| " << setw(5) << Index << " | "
-            << setw(18) << Current->Data.Title << " | "
-            << setw(18) << Current->Data.Author << " | "
-            << setw(13) << Current->Data.Category << " | "
-            << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" << " |\n";
+             cout << "| " <<termcolor::bright_cyan<< setw(5) << Index <<termcolor::bright_white<< " | "
+            <<termcolor::bright_magenta <<setw(18) << Current->Data.Title <<termcolor::bright_white<< " | "
+            <<termcolor::yellow << setw(18) << Current->Data.Author<<termcolor::bright_white << " | "
+            <<termcolor::cyan << setw(13) << Current->Data.Category <<termcolor::bright_white<< " | "
+            <<termcolor::bright_green << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" << termcolor::bright_white<<" |\n";
 
             Index++;
             Current = Current->Next;
+            cout<<termcolor::bright_white;
             cout<<"+-------+--------------------+--------------------+---------------+----------------+\n";
         }
     }
@@ -267,9 +281,9 @@ void DoubleLinkedList::PrintByCategory(string Category)
     {
         if (Current->Data.Category == Category)
         {
-            cout <<"| " << setw(18) << Current->Data.Title << " | "
-            << setw(18) << Current->Data.Author << " | "
-            << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" << " |\n";
+            cout <<"| " <<termcolor::bright_magenta <<setw(18) << Current->Data.Title <<termcolor::bright_white<< " | "
+            <<termcolor::yellow << setw(18) << Current->Data.Author <<termcolor::bright_white<< " | "
+            <<termcolor::bright_green << setw(13) << fixed << setprecision(2) << Current->Data.Price<<"$" <<termcolor::bright_white<< " |\n";
 
 
             cout<<"+--------------------+--------------------+----------------+\n";
@@ -288,16 +302,18 @@ void DoubleLinkedList::PrintByCategory(string Category)
 /*Complexity: O(1)*/
 void DoubleLinkedList::PrintBook(Book book)
 {
+   cout<<termcolor::bright_white;
     cout<<"+--------------------+--------------------+---------------+----------------+\n";
     cout<<"|        Title       |       Author       |    Category   |      Price     |\n";
     cout<<"+--------------------+--------------------+---------------+----------------+\n";
-    cout << "| " << setw(18) << book.Title << " | "
-            << setw(18) << book.Author << " | "
-            << setw(13) << book.Category << " | "
-            << setw(13) << fixed << setprecision(2) << book.Price<<"$" << " |\n";
+    cout << "| " <<termcolor::bright_magenta<<setw(18) << book.Title <<termcolor::bright_white<< " | "
+         <<termcolor::yellow<< setw(18) << book.Author <<termcolor::bright_white<< " | "
+            <<termcolor::bright_cyan<< setw(13) << book.Category <<termcolor::bright_white<<termcolor::bright_white<<" | "
+            <<termcolor::bright_green<< setw(13) << fixed << setprecision(2) << book.Price<<"$" << " |\n";
 
-
+    cout<<termcolor::bright_white;
     cout<<"+--------------------+--------------------+---------------+----------------+\n";
+    cout<<termcolor::reset;
 }
 
 /**
@@ -310,12 +326,18 @@ void DoubleLinkedList::Free()
 {
     if(IsEmpty())
     {
-        cout<<"\nError: The Library Is Embty At The Moment\n\n";
+                cout <<termcolor::on_bright_red;
+                cout <<termcolor::bright_white;
+                cout<<"\nError: The List Is Empty At The Moment!\n\n";
+                cout <<termcolor::reset;
     }
     else
     {
         char Choice;
+        cout <<termcolor::on_bright_red;
+        cout <<termcolor::bright_white;
         cout<<"Are You Sure You Want To Free The List? (press (Y/y) for yes or (N/n) for no): ";
+        cout <<termcolor::reset;
         cin>>Choice;
         if(Choice == 'y' || Choice == 'Y')
         {
@@ -331,14 +353,25 @@ void DoubleLinkedList::Free()
             Head = nullptr;
             Tail = nullptr;
             Count = 0;
+            cout <<termcolor::bright_white;
+            cout <<termcolor::on_bright_green;
+            cout <<"Free is Done\n";
+            cout <<termcolor::reset;
         }
         else if(Choice == 'n' || Choice == 'N')
         {
-            cout<<"Free Operation Is Canceled\n";
+                       cout <<termcolor::bright_white;
+                       cout <<termcolor::on_bright_green;
+                       cout<<endl;
+                       cout<<"Free Operation Is Canceled\n";
+                       cout <<termcolor::reset;
         }
         else
         {
-            cout<<"Enter a vaild choice\n";
+                        cout <<termcolor::on_bright_red;
+                        cout <<termcolor::bright_white;
+                        cout<<"Error: Enter a vaild choice!\n";
+                        cout <<termcolor::reset;
         }
     }
     
@@ -354,11 +387,24 @@ void DoubleLinkedList::Sort()
 {
     if(IsEmpty())
     {
-        cout<<"\nError: The Library Is List At The Moment\n\n";
+                cout <<termcolor::on_bright_red;
+                cout <<termcolor::bright_white;
+                cout<<"\nError: The Library Is Empty At The Moment!\n\n";
+                cout <<termcolor::reset;
     }
-    else if(Count ==1 ) {}
-    else
+
+    else if(Count ==1 )
+
     {
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_green;
+        cout <<"Sort Done\n";
+        cout <<termcolor::reset;
+    }
+    else
+
+    {
+
         Node *Current = Head;
         while (Current)
         {
@@ -383,6 +429,11 @@ void DoubleLinkedList::Sort()
 
             Current = Current->Next;
         }
+
+        cout <<termcolor::bright_white;
+        cout <<termcolor::on_bright_green;
+        cout <<"Sort Done\n";
+        cout <<termcolor::reset;
     }
     
 }
