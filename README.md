@@ -33,7 +33,7 @@ To run this project, ensure you have a C++ compiler installed on your system. He
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/K-a-r-e-e-m/books-management.git
+    git clone https://github.com/marwan779/DS_project.git
 
     cd executables
     ```
