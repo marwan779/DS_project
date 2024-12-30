@@ -97,44 +97,69 @@ void DoubleLinkedList::InsertAtBegnning(const Book &Item)
  */
 
 
-/*Complexity: O(n)*/
-Book *DoubleLinkedList::Search(const string Title)
-{
-    Node *first = Head;
-    Node *last = Tail;
-    Book *Result = nullptr;
+/* Two Pointers Algorithms Complexity: O(n/2) --> O(n)*/
+Book* DoubleLinkedList::Search(const string Title) {
+    Node* first = Head;
+    Node* last = Tail;
+    Book* Result = nullptr;
 
-    if (first == nullptr || last == nullptr)
-    {
-        cout << "There are no books to search for!\n";        
-        return (Result);
+    // Check if the list is empty
+    if (first == nullptr || last == nullptr) {
+        cout << "There are no books to search for!\n";
+        return Result;
     }
+
     // Handle even and odd length of nodes
-    while (first != last && first != last->Next)
-    {
-        if (first->Data.Title == Title)
-        {
+    while (first != last && first != last->Next) {
+        if (first->Data.Title == Title) {
             Result = &(first->Data);
             return Result;
-        }   
-            
+        }
 
-        if (last->Data.Title == Title)
-        {
+        if (last->Data.Title == Title) {
             Result = &(last->Data);
             return Result;
         }
-            
 
         first = first->Next;
         last = last->Back;
     }
-    cout <<termcolor::bright_white;
-    cout <<termcolor::on_bright_red;//background
+    if (first == last && first->Data.Title == Title) // Found at middle
+    {
+        Result = &(last->Data);
+        return Result;
+    }
+    cout << termcolor::bright_white;
+    cout << termcolor::on_bright_red; // background
     cout << "Error: Book not found!\n";
-    cout <<termcolor::reset;
-    return (Result);
+    cout << termcolor::reset;
+    return nullptr; // If no book is found, return nullptr
 }
+
+/* Sequntial Search Alogrithms Complexity: O(n) */
+// Book* DoubleLinkedList::Search(const string Title) {
+//     Node* current = Head;
+//     Book* Result = nullptr;
+
+//     // Traverse the list
+//     while (current != nullptr) {
+//         if (current->Data.Title == Title) {
+//             Result = &(current->Data);
+//             break; // Exit the loop once the book is found
+//         }
+//         current = current->Next;
+//     }
+
+//     if (Result == nullptr) {
+//         cout << termcolor::bright_white;
+//         cout << termcolor::on_bright_red;
+//         cout << "Error: Book not found!\n";
+//         cout << termcolor::reset;
+//     }
+
+//     return Result;
+// }
+
 
 /**
  * Gets the length of the double linked list.
